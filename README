@@ -1,27 +1,35 @@
 
-                        / MiniTwit /
+                        / MiniTwit U2F Tutorial /
 
-           because writing todo lists is not fun
+           because security matters!
 
 
-    ~ What is MiniTwit?
+    ~ What is MiniTwit U2F Tutorial?
 
-      A SQLite and Flask powered twitter clone
+      A step-by-step tutorial on adding U2F support to an existing application.
+      Starting from the MiniTwit example from the Flask microframework, this
+      tutorial shows the steps needed to secur access to user accounts using
+      U2F.
 
     ~ How do I use it?
 
-      1. edit the configuration in the minitwit.py file or
-         export an MINITWIT_SETTINGS environment variable
-         pointing to a configuration file.
+      1. Follow along the steps in the tutorial/X tags and compare the code
+         changes between the tags. If you want to, you can run the code at each
+         step to see the changes in action.
 
-      2. fire up a python shell and run this:
+      2. To run the project, first install the required dependencies by running:
 
-         >>> from minitwit import init_db; init_db()
+         $ pip install -r requirements.txt
 
-      3. now you can run the minitwit.py file with your
-         python interpreter and the application will
-         greet you on http://localhost:5000/
-	
+         Then initialize the database:
+         
+         $ python minitwit.py --init-db
+
+         Now run the server:
+
+         $ python minitwit.py
+
+
     ~ Is it tested?
 
       You betcha.  Run the `minitwit_tests.py` file to
