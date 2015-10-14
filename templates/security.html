@@ -5,7 +5,13 @@
 {% block body %}
   <h2>{{ self.title() }}</h2>
   <ul class=messages>
+  {% for device in devices %}
+    <li><img width="60" height="60" src="{{ device.metadata.device.imageUrl }}"><p>
+      <strong>{{ device.properties.name }}</strong><br />
+      {{ device.metadata.device.displayName }}<br />
+  {% else %}
     <li><em>You have no U2F devices registered.</em>
+  {% endfor %}
   </ul>
 
   <div class=twitbox>

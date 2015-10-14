@@ -261,7 +261,8 @@ def register():
 @app.route('/security')
 def security():
     """Security (U2F) options."""
-    return render_template('security.html')
+    devices = u2fval.list_devices(get_current_user())
+    return render_template('security.html', devices=devices)
 
 
 @app.route('/u2f_register', methods=['POST'])
