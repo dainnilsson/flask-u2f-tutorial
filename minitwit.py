@@ -17,6 +17,19 @@ from flask import Flask, request, session, url_for, redirect, \
      render_template, abort, g, flash, _app_ctx_stack
 from werkzeug import check_password_hash, generate_password_hash
 
+from u2fval_client.client import Client
+from u2fval_client.auth import ApiToken
+
+# U2FVAL server settings
+U2FVAL_HOST = 'https://u2fval.appspot.com/api'
+try:
+    with open('u2fval_api_token', 'r') as f:
+        U2FVAL_API_TOKEN = f.read().strip()
+except IOError:
+    print 'No U2FVAL API key found.'
+
+# U2FVAL client
+u2fval = Client(U2FVAL_HOST, ApiToken(U2FVAL_API_TOKEN))
 
 # configuration
 DATABASE = '/tmp/minitwit.db'
