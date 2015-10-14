@@ -19,6 +19,7 @@ from werkzeug import check_password_hash, generate_password_hash
 
 from u2fval_client.client import Client
 from u2fval_client.auth import ApiToken
+from u2fval_client import exc
 
 # U2FVAL server settings
 U2FVAL_HOST = 'https://u2fval.appspot.com/api'
@@ -222,10 +223,26 @@ def login():
                                      request.form['password']):
             error = 'Invalid password'
         else:
-            flash('You were logged in')
-            session['user_id'] = user['user_id']
-            return redirect(url_for('timeline'))
+            try:
+                session['u2f_user_id'] = user['user_id']
+                auth_req = u2fval.auth_begin(str(user['user_id']))
+                return render_template('u2f_auth.html', auth_req=auth_req)
+            except exc.NoEligableDevicesException as e:
+                if not e.has_devices():
+                    flash('You were logged in without U2F')
+                    session['user_id'] = user['user_id']
+                    return redirect(url_for('timeline'))
+                error = e.message
     return render_template('login.html', error=error)
+
+
+@app.route('/u2f_login_complete', methods=['POST'])
+def u2f_login_complete():
+    device = u2fval.auth_complete(str(session['u2f_user_id']),
+                                  request.form['u2f_data'])
+    flash('Authenticated using %s' % device['properties']['name'])
+    session['user_id'] = session['u2f_user_id']
+    return redirect(url_for('timeline'))
 
 
 @app.route('/register', methods=['GET', 'POST'])

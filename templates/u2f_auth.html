@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block title %}
+    Authenticate a U2F device
+{% endblock %}
+{% block body %}
+  <h2>{{ self.title() }}</h2>
+
+  <div class=twitbox>
+    <h3>Insert and touch your U2F device</h3>
+    <form id=u2f_form action="{{ url_for('u2f_login_complete') }}" method=post>
+      <input type=hidden name=u2f_data id=u2f_data>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+u2f.sign({{ auth_req.authenticateRequests | tojson }}, function(resp) {
+  if(resp.errorCode) {
+    alert('Error: ' + resp.errorCode);
+  } else {
+    document.getElementById('u2f_data').value = JSON.stringify(resp);
+    document.getElementById('u2f_form').submit();
+  }
+});
+  </script>
+
+{% endblock %}
