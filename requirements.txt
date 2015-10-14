@@ -1,0 +1,2 @@
+flask==0.10.1
+u2fval-client>=1.0.1
