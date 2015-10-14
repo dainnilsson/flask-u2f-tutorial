@@ -251,7 +251,11 @@ app.jinja_env.filters['gravatar'] = gravatar_url
 
 
 if __name__ == '__main__':
-    init_db()
+    import sys
+    if '--init-db' in sys.argv:
+        init_db()
+        print "Database initialized!"
+        sys.exit(0)
 
     import ssl
     context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
