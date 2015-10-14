@@ -281,6 +281,13 @@ def u2f_register_complete():
     return redirect(url_for('security'))
 
 
+@app.route('/u2f_unregister/<handle>')
+def u2f_unregister(handle):
+    """Remove a registered U2F device"""
+    u2fval.unregister(get_current_user(), handle)
+    return redirect(url_for('security'))
+
+
 @app.route('/logout')
 def logout():
     """Logs the user out."""
