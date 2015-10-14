@@ -8,4 +8,12 @@
     <li><em>You have no U2F devices registered.</em>
   </ul>
 
+  <div class=twitbox>
+    <h3>Register a new U2F device</h3>
+    <form action="{{ url_for('u2f_register') }}" method=post>
+      <p><input type=text name=name placeholder="Device nickname" size=60><!--
+      --><input type=submit value="Add">
+    </form>
+  </div>
+
 {% endblock %}

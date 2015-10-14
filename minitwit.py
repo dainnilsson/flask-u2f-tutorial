@@ -54,6 +54,14 @@ def get_db():
     return top.sqlite_db
 
 
+def get_current_user():
+    """Get the currently logged in user ID, as a string.
+    If the user is not logged in, respond with 401."""
+    if 'user_id' not in session:
+        abort(401)
+    return str(session['user_id'])
+
+
 @app.teardown_appcontext
 def close_database(exception):
     """Closes the database again at the end of the request."""
@@ -254,6 +262,22 @@ def register():
 def security():
     """Security (U2F) options."""
     return render_template('security.html')
+
+
+@app.route('/u2f_register', methods=['POST'])
+def u2f_register():
+    """Register a U2F device"""
+    reg_req = u2fval.register_begin(get_current_user())
+    return render_template('u2f_add.html',
+                           name=request.form['name'],
+                           reg_req=reg_req)
+
+
+@app.route('/u2f_register_complete', methods=['POST'])
+def u2f_register_complete():
+    u2fval.register_complete(get_current_user(), request.form['u2f_data'],
+                             {'name': request.form['name']})
+    return redirect(url_for('security'))
 
 
 @app.route('/logout')
