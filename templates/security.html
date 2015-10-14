@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}
+    Security settings
+{% endblock %}
+{% block body %}
+  <h2>{{ self.title() }}</h2>
+  <ul class=messages>
+    <li><em>You have no U2F devices registered.</em>
+  </ul>
+
+{% endblock %}

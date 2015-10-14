@@ -250,6 +250,12 @@ def register():
     return render_template('register.html', error=error)
 
 
+@app.route('/security')
+def security():
+    """Security (U2F) options."""
+    return render_template('security.html')
+
+
 @app.route('/logout')
 def logout():
     """Logs the user out."""
