@@ -29,6 +29,9 @@
 
          $ python minitwit.py
 
+      Update: For a step-by-step deployment guide for Windows, see the
+      Flask U2F Tutorial - Deployment Guide.pdf file included in this repository.
+
 
     ~ Is it tested?
 
