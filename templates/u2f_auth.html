@@ -13,7 +13,10 @@
   </div>
 
   <script type="text/javascript">
-u2f.sign({{ auth_req.authenticateRequests | tojson }}, function(resp) {
+    var appId = "{{ auth_req.appId }}";
+    var challenge = "{{ auth_req.challenge }}";
+    var registeredKeys = [{ version: '{{ auth_req.registeredKeys[0]['version'] }}', keyHandle: '{{ auth_req.registeredKeys[0]['keyHandle'] }}' }];
+u2f.sign(appId, challenge, registeredKeys, function(resp) {
   if(resp.errorCode) {
     alert('Error: ' + resp.errorCode);
   } else {

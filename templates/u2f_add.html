@@ -14,7 +14,9 @@
   </div>
 
   <script type="text/javascript">
-u2f.register({{ reg_req.registerRequests | tojson }}, {{ reg_req.authenticateRequests | tojson }}, function(resp) {
+    var appId = "{{ reg_req.appId }}";
+    var registerRequests = [{ challenge: '{{ reg_req.registerRequests[0]['challenge'] }}', version: '{{ reg_req.registerRequests[0]['version'] }}', attestation: 'direct' }];
+    u2f.register(appId, registerRequests, {{ reg_req.registeredKeys | tojson }}, function(resp) {
   if(resp.errorCode) {
     alert('Error: ' + resp.errorCode);
   } else {
