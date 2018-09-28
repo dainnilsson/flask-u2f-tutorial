@@ -22,7 +22,7 @@
          $ pip install -r requirements.txt
 
          Then initialize the database:
-         
+
          $ python minitwit.py --init-db
 
          Now run the server:
@@ -32,8 +32,3 @@
       Update: For a step-by-step deployment guide for Windows, see the
       Flask U2F Tutorial - Deployment Guide.pdf file included in this repository.
 
-
-    ~ Is it tested?
-
-      You betcha.  Run the `minitwit_tests.py` file to
-      see the tests pass.
